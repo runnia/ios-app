@@ -7,8 +7,10 @@
 //
 
 import CoreSpotlight
-import Crashlytics
-import Fabric
+#if !targetEnvironment(macCatalyst)
+    import Crashlytics
+    import Fabric
+#endif
 import Logging
 import Swinject
 import UIKit
@@ -37,8 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Fabric.with([Crashlytics.self])
-
+        #if !targetEnvironment(macCatalyst)
+            Fabric.with([Crashlytics.self])
+        #endif
         #if DEBUG
             let args = ProcessInfo.processInfo.arguments
 
